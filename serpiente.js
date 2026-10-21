@@ -5,6 +5,35 @@
     const TAMAÑO_CELDA = 25;
     const HANCHO_CANVAS = canvas.width;
     const ALTO_CANVAS = canvas.height
+    const SERPIENTE = [
+      /*{X:5, Y:4},
+      {X:10, Y:10},
+      {X:8, Y:0}*/
+
+      // eljercicio 1
+     /* {X:0, Y:0},
+      {X:1, Y:0},
+      {X:2, Y:0}*/
+
+      //ejercicio 2
+      /*{X:8, Y:9},
+      {X:9, Y:9},
+      {X:10, Y:9},
+      {X:10, Y:10}*/
+
+      //ejercicio 3
+      {X:5, Y:8},
+      {X:5, Y:9},
+      {X:5, Y:10},
+      {X:5, Y:11},
+      {X:5, Y:12},
+      {X:6, Y:12},
+      {X:6, Y:12},
+      {X:7, Y:12},
+      {X:7, Y:13},
+      {X:7, Y:14}
+      
+    ];
 
     let lineaX = 0;
     let lineaY = 0;
