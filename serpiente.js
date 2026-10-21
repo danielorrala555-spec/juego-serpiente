@@ -5,10 +5,35 @@
     const TAMAÑO_CELDA = 25;
     const HANCHO_CANVAS = canvas.width;
     const ALTO_CANVAS = canvas.height
+    const SERPIENTE = [
+      /*{X:5, Y:4},
+      {X:10, Y:10},
+      {X:8, Y:0}*/
+
+      // eljercicio 1
+     /* {X:0, Y:0},
+      {X:1, Y:0},
+      {X:2, Y:0}*/
+
+      //ejercicio 2
+      /*{X:8, Y:9},
+      {X:9, Y:9},
+      {X:10, Y:9},
+      {X:10, Y:10}*/
+
+      //ejercicio 3
+      {X:0, Y:9},
+      {X:0, Y:10},
+      {X:0, Y:11},
+      {X:0, Y:12},
+      {X:1, Y:12}
+      
+    ];
 
     let lineaX = 0;
     let lineaY = 0;
     let color = "#5143b9";
+    let colorCabeza = "#ec6a45";
     let borde = "#e45656";
 
 
@@ -28,7 +53,7 @@
     function dibujarTodo() {
       limpiarCanvas();
       dibujarTablero();
-      pintarParte();
+      pintarSerpiente()
     }
 
     function dibujarTablero(){
@@ -62,6 +87,15 @@
     dibujarPixel(0, 10, color, borde);
     dibujarPixel( HANCHO_CANVAS /TAMAÑO_CELDA - 1, ALTO_CANVAS /TAMAÑO_CELDA - 1, color, borde);
     
+  }
+  function pintarSerpiente(){
+    let cabeza = SERPIENTE[0];
+      // color distintivo para ubicar la cabeza
+       
+    for(let i=0; i<=SERPIENTE.length; i ++){
+      dibujarPixel(SERPIENTE[i].X, SERPIENTE[i].Y, color, borde);
+      dibujarPixel(cabeza.X,cabeza.Y,colorCabeza,borde)
+    }
   }
 
 
