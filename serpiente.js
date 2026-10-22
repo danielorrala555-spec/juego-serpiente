@@ -6,22 +6,7 @@
     const HANCHO_CANVAS = canvas.width;
     const ALTO_CANVAS = canvas.height
     const SERPIENTE = [
-      /*{X:5, Y:4},
-      {X:10, Y:10},
-      {X:8, Y:0}*/
 
-      // eljercicio 1
-     /* {X:0, Y:0},
-      {X:1, Y:0},
-      {X:2, Y:0}*/
-
-      //ejercicio 2
-      /*{X:8, Y:9},
-      {X:9, Y:9},
-      {X:10, Y:9},
-      {X:10, Y:10}*/
-
-      //ejercicio 3
       {X:5, Y:8},
       {X:5, Y:9},
       {X:5, Y:10},
@@ -33,12 +18,16 @@
       {X:7, Y:14}
       
     ];
-
+    let direccionActual = "derecha";
+    let intervaloSerpiente;
     let lineaX = 0;
     let lineaY = 0;
     let color = "#5143b9";
     let colorCabeza = "#ec6a45";
     let borde = "#e45656";
+    let comidaX;
+    let comidaY;
+    let colorComida = "#4558ec";
 
 
     
@@ -58,6 +47,7 @@
       limpiarCanvas();
       dibujarTablero();
       pintarSerpiente();
+      pintaComida();
     }
 
     function dibujarTablero(){
@@ -144,17 +134,59 @@ function pintarSerpiente(){
 
   function cambiarDireccion(direccion){
     if (direccion === "derecha") {
-    moverDerecha();
+    direccionActual = "derecha" ;
   }
   if (direccion === "izquierda") {
-    moverIzquierda();
+    direccionActual = "izquierda" ;
   }
   if (direccion === "arriba") {
-    moverArriba();
+    direccionActual = "arriba" ;
   }
   if (direccion === "abajo") {
-    moverAbajo();
+    direccionActual = "abajo" ;
   }
   dibujarTodo();
     
+  }
+
+  function iniciarJuego(){
+    intervaloSerpiente = setInterval(moverSerpiente, 1000);
+    aparecerComida();
+    
+
+  }
+
+  function pausarJuego(){
+    clearInterval(intervaloSerpiente);
+
+  }
+
+  function moverSerpiente(){
+    if(direccionActual === "derecha"){
+      moverDerecha();
+    }
+    if(direccionActual === "izquierda"){
+      moverIzquierda();
+    }
+    if(direccionActual === "arriba"){
+      moverArriba();
+    }
+    if(direccionActual === "abajo"){
+      moverAbajo();
+    }
+    dibujarTodo();
+  }
+
+  function aparecerComida(){
+    generaraComida();
+    pintaComida();
+  }
+
+  function pintaComida(){
+    dibujarPixel(comidaX, comidaY, colorComida);
+  }
+
+  function generaraComida(){
+    comidaX = Math.floor(Math.random() * (canvas.width / TAMAÑO_CELDA));
+    comidaY = Math.floor(Math.random() * (canvas.height / TAMAÑO_CELDA));
   }
