@@ -5,7 +5,7 @@
     const TAMAÑO_CELDA = 25;
     const HANCHO_CANVAS = canvas.width;
     const ALTO_CANVAS = canvas.height
-    const SERPIENTE = [
+    let SERPIENTE = [
 
       {X:5, Y:8},
       {X:5, Y:9},
@@ -30,7 +30,8 @@
     let colorComida = "#4558ec";
     let colision = false;
     let puntaje =0;
-
+    let estadoJuego = document.getElementById("estado")
+    
 
     
 
@@ -200,6 +201,7 @@ function pintarSerpiente(){
     }
     colision=false
     aptrapaComida();
+    gameOver();
     dibujarTodo();
   }
 
@@ -221,5 +223,51 @@ function pintarSerpiente(){
     if(SERPIENTE[0].X === comidaX && SERPIENTE[0].Y === comidaY){
       colision = true;
     }
-
   }
+
+  function gameOver(){
+    let mensaje = "game over, anciano!";
+    let nuevaX = SERPIENTE[0].X;
+  let nuevaY = SERPIENTE[0].Y;
+  if (direccionActual === "derecha") {
+    nuevaX++;
+  } else if (direccionActual === "izquierda") {
+    nuevaX--;
+  } else if (direccionActual === "arriba") {
+    nuevaY--;
+  } else if (direccionActual === "abajo") {
+    nuevaY++;
+  }
+  // Validar bordes
+  if (
+    nuevaX < 0 ||
+    nuevaX >= ALTO_CANVAS / TAMAÑO_CELDA ||
+    nuevaY < 0 ||
+    nuevaY >= HANCHO_CANVAS / TAMAÑO_CELDA
+  ) {
+    
+    clearInterval(intervaloSerpiente);
+    estadoJuego.textContent = mensaje;
+  }
+}
+
+function reiniciarJuego(){
+  let mensaje= "Listo"
+  direccionActual = "derecha";
+  puntaje = 0;
+  SERPIENTE = [
+
+      {X:5, Y:8},
+      {X:5, Y:9},
+      {X:5, Y:10},
+      {X:5, Y:11},
+      {X:5, Y:12},
+      {X:6, Y:12},
+      {X:7, Y:12},
+      {X:7, Y:13},
+      {X:7, Y:14}
+      
+    ];
+    estadoJuego.textContent = mensaje;
+  dibujarTodo();
+}
