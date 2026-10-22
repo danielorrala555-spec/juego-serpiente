@@ -28,6 +28,8 @@
     let comidaX;
     let comidaY;
     let colorComida = "#4558ec";
+    let colision = false;
+    let puntaje =0;
 
 
     
@@ -48,6 +50,7 @@
       dibujarTablero();
       pintarSerpiente();
       pintaComida();
+      aptrapaComida()
     }
 
     function dibujarTablero(){
@@ -89,8 +92,8 @@ function pintarSerpiente(){
 
     for(let i=0; i<SERPIENTE.length; i ++){
       dibujarPixel(SERPIENTE[i].X, SERPIENTE[i].Y, color, borde);
-      dibujarPixel(cabeza.X,cabeza.Y,colorCabeza,borde)
     }
+    dibujarPixel(cabeza.X,cabeza.Y,colorCabeza,borde)
   }
   function moverDerecha(){
     let nvCabeza = { 
@@ -98,7 +101,9 @@ function pintarSerpiente(){
         Y: SERPIENTE[0].Y 
         };
         SERPIENTE.unshift(nvCabeza);
-        SERPIENTE.pop(); 
+        if(colision === false){
+          SERPIENTE.pop();
+        } 
            
   }
 
@@ -108,7 +113,9 @@ function pintarSerpiente(){
         Y: SERPIENTE[0].Y 
         };
         SERPIENTE.unshift(nvCabeza);
-        SERPIENTE.pop(); 
+        if(colision === false){
+          SERPIENTE.pop();
+        } 
            
   }
 
@@ -118,7 +125,10 @@ function pintarSerpiente(){
         Y: SERPIENTE[0].Y -1
         };
         SERPIENTE.unshift(nvCabeza);
-        SERPIENTE.pop(); 
+        if(colision === false){
+          SERPIENTE.pop();
+        }
+         
            
   }
 
@@ -128,7 +138,9 @@ function pintarSerpiente(){
         Y: SERPIENTE[0].Y+1  
         };
         SERPIENTE.unshift(nvCabeza);
-        SERPIENTE.pop(); 
+        if(colision === false){
+          SERPIENTE.pop();
+        } 
            
   }
 
@@ -151,14 +163,11 @@ function pintarSerpiente(){
 
   function iniciarJuego(){
     intervaloSerpiente = setInterval(moverSerpiente, 1000);
-    aparecerComida();
-    
-
+    aparecerComida(); 
   }
 
   function pausarJuego(){
     clearInterval(intervaloSerpiente);
-
   }
 
   function moverSerpiente(){
@@ -174,6 +183,14 @@ function pintarSerpiente(){
     if(direccionActual === "abajo"){
       moverAbajo();
     }
+    pintaComida();
+    if(colision === true){
+      puntaje ++;
+      document.getElementById("puntaje").innerText = puntaje; 
+
+    }
+    colision=false
+    aptrapaComida();
     dibujarTodo();
   }
 
@@ -189,4 +206,11 @@ function pintarSerpiente(){
   function generaraComida(){
     comidaX = Math.floor(Math.random() * (canvas.width / TAMAÑO_CELDA));
     comidaY = Math.floor(Math.random() * (canvas.height / TAMAÑO_CELDA));
+  }
+
+  function aptrapaComida(){
+    if(SERPIENTE[0].X === comidaX && SERPIENTE[0].Y === comidaY){
+      colision = true;
+    }
+
   }
