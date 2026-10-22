@@ -28,7 +28,6 @@
       {X:5, Y:11},
       {X:5, Y:12},
       {X:6, Y:12},
-      {X:6, Y:12},
       {X:7, Y:12},
       {X:7, Y:13},
       {X:7, Y:14}
@@ -38,6 +37,7 @@
     let lineaX = 0;
     let lineaY = 0;
     let color = "#5143b9";
+    let colorCabeza = "#ec6a45";
     let borde = "#e45656";
 
 
@@ -57,7 +57,7 @@
     function dibujarTodo() {
       limpiarCanvas();
       dibujarTablero();
-      pintarParte();
+      pintarSerpiente();
     }
 
     function dibujarTablero(){
@@ -93,4 +93,68 @@
     
   }
 
+function pintarSerpiente(){
+    let cabeza = SERPIENTE[0];
+      // color distintivo para ubicar la cabeza
 
+    for(let i=0; i<SERPIENTE.length; i ++){
+      dibujarPixel(SERPIENTE[i].X, SERPIENTE[i].Y, color, borde);
+      dibujarPixel(cabeza.X,cabeza.Y,colorCabeza,borde)
+    }
+  }
+  function moverDerecha(){
+    let nvCabeza = { 
+        X: SERPIENTE[0].X +1 ,
+        Y: SERPIENTE[0].Y 
+        };
+        SERPIENTE.unshift(nvCabeza);
+        SERPIENTE.pop(); 
+           
+  }
+
+  function moverIzquierda(){
+    let nvCabeza = { 
+        X: SERPIENTE[0].X -1 ,
+        Y: SERPIENTE[0].Y 
+        };
+        SERPIENTE.unshift(nvCabeza);
+        SERPIENTE.pop(); 
+           
+  }
+
+  function moverArriba(){
+    let nvCabeza = { 
+        X: SERPIENTE[0].X ,
+        Y: SERPIENTE[0].Y -1
+        };
+        SERPIENTE.unshift(nvCabeza);
+        SERPIENTE.pop(); 
+           
+  }
+
+  function moverAbajo(){
+    let nvCabeza = { 
+        X: SERPIENTE[0].X ,
+        Y: SERPIENTE[0].Y+1  
+        };
+        SERPIENTE.unshift(nvCabeza);
+        SERPIENTE.pop(); 
+           
+  }
+
+  function cambiarDireccion(direccion){
+    if (direccion === "derecha") {
+    moverDerecha();
+  }
+  if (direccion === "izquierda") {
+    moverIzquierda();
+  }
+  if (direccion === "arriba") {
+    moverArriba();
+  }
+  if (direccion === "abajo") {
+    moverAbajo();
+  }
+  dibujarTodo();
+    
+  }
