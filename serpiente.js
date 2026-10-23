@@ -5,6 +5,15 @@
     const TAMAÑO_CELDA = 25;
     const HANCHO_CANVAS = canvas.width;
     const ALTO_CANVAS = canvas.height
+    const sonidoJuego = new Audio("破旧世界 (Broken World)(M4A_128K)-mc.m4a");
+    const sonidoComer = new Audio("Audio_3_m4a_20260730_000703.m4a");
+    const sonidoGameOver = new Audio("Audio_2_m4a_20260730_000617.m4a");
+    sonidoComer.volume = 0.7;
+    sonidoGameOver.volume = 0.8;
+    sonidoJuego.volume = 0.4;
+
+    sonidoJuego.loop = true;
+
     let SERPIENTE = [
 
       {X:5, Y:8},
@@ -31,6 +40,7 @@
     let colision = false;
     let puntaje =0;
     let estadoJuego = document.getElementById("estado")
+    let velocidad = 1000;
     
 
     
@@ -51,7 +61,6 @@
       dibujarTablero();
       pintarSerpiente();
       pintaComida();
-      aptrapaComida()
     }
 
     function dibujarTablero(){
@@ -172,15 +181,22 @@ function pintarSerpiente(){
   }
 
   function iniciarJuego(){
-    intervaloSerpiente = setInterval(moverSerpiente, 1000);
+    sonidoJuego.play();
+    intervaloSerpiente = setInterval(moverSerpiente, velocidad);
     aparecerComida(); 
   }
 
   function pausarJuego(){
+    sonidoJuego.pause();
     clearInterval(intervaloSerpiente);
   }
 
   function moverSerpiente(){
+    if(gameOver()){
+
+    return;
+
+  }
     if(direccionActual === "derecha"){
       moverDerecha();
     }
@@ -193,7 +209,6 @@ function pintarSerpiente(){
     if(direccionActual === "abajo"){
       moverAbajo();
     }
-    pintaComida();
     if(colision === true){
       puntaje ++;
       document.getElementById("puntaje").innerText = puntaje; 
@@ -201,8 +216,8 @@ function pintarSerpiente(){
     }
     colision=false
     aptrapaComida();
-    gameOver();
     dibujarTodo();
+    nivel(puntaje)
   }
 
   function aparecerComida(){
@@ -222,6 +237,10 @@ function pintarSerpiente(){
   function aptrapaComida(){
     if(SERPIENTE[0].X === comidaX && SERPIENTE[0].Y === comidaY){
       colision = true;
+      cambiarVelocidad();
+      generaraComida();
+      sonidoComer.play();
+      sonidoComer.currentTime =0;
     }
   }
 
@@ -248,7 +267,13 @@ function pintarSerpiente(){
     
     clearInterval(intervaloSerpiente);
     estadoJuego.textContent = mensaje;
+    sonidoJuego.pause();
+  sonidoJuego.currentTime = 0;
+  sonidoGameOver.currentTime = 0;
+
+sonidoGameOver.play();
   }
+  
 }
 
 function reiniciarJuego(){
@@ -271,3 +296,25 @@ function reiniciarJuego(){
     estadoJuego.textContent = mensaje;
   dibujarTodo();
 }
+
+function cambiarVelocidad(){
+  clearInterval(intervaloSerpiente);
+  velocidad -= 100;
+  intervaloSerpiente = setInterval(moverSerpiente, velocidad);
+}
+
+function nivel(puntaje){
+  if(puntaje== 3){
+    document.getElementById("mensajeLevel").innerText = "NIVEL 2, APRENDIS";
+  }
+  if(puntaje== 5){
+    document.getElementById("mensajeLevel").innerText = "NIVEL 3, MAESTRO";
+  }
+  if(puntaje== 7){
+    document.getElementById("mensajeLevel").innerText = "NIVEL 4, LEYENDA";
+  }
+  if(puntaje== 9){
+    document.getElementById("mensajeLevel").innerText = 'NIVEL 5, "NIVEL DIOS"';
+  }
+}
+
