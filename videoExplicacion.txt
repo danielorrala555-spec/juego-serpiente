@@ -1,0 +1,7 @@
+https://drive.google.com/file/d/1jgGFvFgBp7dqrY1-cMDgFf9jJRDoGKeI/view?usp=sharing
+
+LA MEMORIA SE ME ACABO!!!! <:(
+    pero me falto decir que game over detiene el sonido del juego y reproduce el sonido dde game over y luego manda el mensaje,
+    tambien manda un "return true"
+    - la funcion mover serpeiente tiene un if, si game over es true, entonces la funcion se corta o se detiene, esto evita que aga movimientos
+    despues deque mandee el mensaje de game over

@@ -275,8 +275,8 @@ function pintarSerpiente(){
     clearInterval(intervaloTiempo);
     sonidoJuego.pause();
     sonidoJuego.currentTime = 0;
-    sonidoGameOver.play();
     sonidoGameOver.currentTime = 0;
+    sonidoGameOver.play();
     estadoJuego.textContent = mensaje;
     return true;
   }
