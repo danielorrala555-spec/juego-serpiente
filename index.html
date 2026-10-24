@@ -1,56 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juego de la Serpiente - Taller</title>
-   <link rel="stylesheet" href="serpiente.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="serpiente.css">
+    <title>Juego de la Serpiente</title>
 </head>
-<body onload="dibujarTodo()">
-  <main class="contenedor-juego">
-    <h1>🐍 Juego de la Serpiente</h1>
-    <p class="descripcion">
-      eres una serpiente que busca sobrevivir comiendo todo lo que pueda antes de que el tiempo se acabe
-    </p>
-    <p id="mensajeLevel" class="descripcion">
-      NIVEL 1: PRINCIPIANTE
-    </p>
 
-    <section class="panel-info">
-      <div class="tarjeta-info">
-        <span>Puntaje</span>
-        <strong id="puntaje">0</strong>
-      </div>
-      <div class="tarjeta-info">
-        <span>Estado</span>
-        <strong id="estado">Listo</strong>
-      </div>
-    </section>
+<body onload="dibujrTablero()">
 
-    <canvas id="canvasJuego" width="600" height="600"></canvas>
+    
 
-    <section class="controles">
-      <button class="vacio">-</button>
-      <button onclick="cambiarDireccion('arriba')">⬆️</button>
-      <button class="vacio">-</button>
+    <div class="layout">
 
-      <button onclick="cambiarDireccion('izquierda')">⬅️</button>
-      <button onclick="pausarJuego()">⏸️</button>
-      <button onclick="cambiarDireccion('derecha')">➡️</button>
+        <!-- MENÚ LATERAL -->
+        <section class="menuOpciones" id="menuLateral">
 
-      <button class="vacio">-</button>
-      <button onclick="cambiarDireccion('abajo')">⬇️</button>
-      <button class="vacio">-</button>
-    </section>
+            <aside class="sidebar">
 
-    <section class="acciones">
-      <button onclick="iniciarJuego()">Iniciar</button>
-      <button class="secundario" onclick="reiniciarJuego()">Reiniciar</button>
-    </section>
+                <div class="logo">
+                    <div class="logo-serpiente">S</div>
+                    <h2>SNAKE</h2>
+                    <span>THE LEGEND</span>
+                </div>
 
-    <p id="mensaje" class="mensaje">Presiona iniciar para comenzar.</p>
-  </main>
+                <nav class="menu">
 
-  <script src="serpiente.js"></script>
+                    <a href="#" class="activo">
+                        <span>🏠</span>
+                        Inicio
+                    </a>
+
+                    <a href="#">
+                        <span>🎭</span>
+                        Skins
+                    </a>
+
+                    <a href="#">
+                        <span>⚔️</span>
+                        Habilidades
+                    </a>
+
+                    <a href="#">
+                        <span>🔥</span>
+                        Ataques
+                    </a>
+
+                    <a href="#">
+                        <span>🏆</span>
+                        Logros
+                    </a>
+
+                    <a href="#">
+                        <span>👤</span>
+                        Perfil
+                    </a>
+
+                </nav>
+
+            </aside>
+
+        </section>
+
+
+        <!-- INFORMACIÓN -->
+        <section class="menuIzqueerdo">
+
+            <div class="panel-info">
+
+                <div class="tarjeta-info tiempo">
+                    <span>⏱ TIEMPO</span>
+                    <strong id="tiempoRest">0</strong>
+                </div>
+
+                <div class="tarjeta-info puntaje">
+                    <span>★ PUNTAJE</span>
+                    <strong id="puntaje">0</strong>
+                </div>
+
+                <div class="tarjeta-info estado">
+                    <span>〽 ESTADO</span>
+                    <strong id="estado">Listo</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- JUEGO -->
+        <main class="contenedor">
+
+            <section class="cabecera-juego">
+
+                <h1>JUEGO DE LA SERPIENTE</h1>
+
+                <p class="descripcion">
+                    Eres una serpiente que busca sobrevivir comiendo todo
+                    lo que pueda antes de que el tiempo se acabe.
+                </p>
+
+            </section>
+
+            <canvas
+                id="canvasJuego"
+                height="600"
+                width="600"
+                class="canvass">
+            </canvas>
+
+            <p id="mensajeLevel" class="mensaje">
+                NIVEL 1, principiante
+            </p>
+
+        </main>
+
+
+        <!-- CONTROLES -->
+        <section class="menuDerecho">
+
+            <h2>CONTROLES</h2>
+
+            <div class="controles">
+
+                <button class="vacio"></button>
+
+                <button onclick="cambiarDireccion('arriba')">
+                    <span class="flecha">⬆</span>
+                    <span>W</span>
+                </button>
+
+                <button class="vacio"></button>
+
+
+                <button onclick="cambiarDireccion('izquierda')">
+                    <span class="flecha">⬅</span>
+                    <span>A</span>
+                </button>
+
+                <button onclick="pausarJuego()">
+                    <span class="flecha">⏸</span>
+                    <span>SPACE</span>
+                </button>
+
+                <button onclick="cambiarDireccion('derecha')">
+                    <span class="flecha">➡</span>
+                    <span>D</span>
+                </button>
+
+
+                <button class="vacio"></button>
+
+                <button onclick="cambiarDireccion('abajo')">
+                    <span class="flecha">⬇</span>
+                    <span>S</span>
+                </button>
+
+                <button class="vacio"></button>
+
+            </div>
+
+
+            <div class="acciones">
+
+                <button onclick="iniciarJuego()">
+                    ▶ Iniciar
+                </button>
+
+                <button
+                    class="secundario"
+                    onclick="reiniciarJuego()">
+                    ↻ Reiniciar
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+    <script src="serpiente.js"></script>
+
 </body>
 </html>

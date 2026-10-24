@@ -41,6 +41,8 @@
     let puntaje =0;
     let estadoJuego = document.getElementById("estado")
     let velocidad = 1000;
+    let tiempo = 60;
+    let intervaloTiempo;
     
 
     
@@ -182,13 +184,18 @@ function pintarSerpiente(){
 
   function iniciarJuego(){
     sonidoJuego.play();
+    clearInterval(intervaloTiempo);
+    intervaloTiempo = setInterval(restarTiempo, 1000);
     intervaloSerpiente = setInterval(moverSerpiente, velocidad);
-    aparecerComida(); 
+    if (comidaX === undefined || comidaY === undefined) {
+    aparecerComida();
+    }
   }
 
   function pausarJuego(){
     sonidoJuego.pause();
     clearInterval(intervaloSerpiente);
+    clearInterval(intervaloTiempo);
   }
 
   function moverSerpiente(){
@@ -262,24 +269,32 @@ function pintarSerpiente(){
     nuevaX < 0 ||
     nuevaX >= ALTO_CANVAS / TAMAÑO_CELDA ||
     nuevaY < 0 ||
-    nuevaY >= HANCHO_CANVAS / TAMAÑO_CELDA
+    nuevaY >= HANCHO_CANVAS / TAMAÑO_CELDA || tiempo <= 0
   ) {
-    
     clearInterval(intervaloSerpiente);
-    estadoJuego.textContent = mensaje;
+    clearInterval(intervaloTiempo);
     sonidoJuego.pause();
-  sonidoJuego.currentTime = 0;
-  sonidoGameOver.currentTime = 0;
-
-sonidoGameOver.play();
+    sonidoJuego.currentTime = 0;
+    sonidoGameOver.play();
+    sonidoGameOver.currentTime = 0;
+    estadoJuego.textContent = mensaje;
+    return true;
   }
+
+  return false;
+
   
 }
-
+//------------------------------------[controsl del tiempo]----------------------------------//
 function reiniciarJuego(){
+  clearInterval(intervaloSerpiente);
+  clearInterval(intervaloTiempo);
+  sonidoJuego.pause();
+  sonidoJuego.currentTime = 0;
   let mensaje= "Listo"
   direccionActual = "derecha";
   puntaje = 0;
+  tiempo = 60;
   SERPIENTE = [
 
       {X:5, Y:8},
@@ -293,16 +308,17 @@ function reiniciarJuego(){
       {X:7, Y:14}
       
     ];
+    document.getElementById("tiempoRest").innerText = tiempo;
     estadoJuego.textContent = mensaje;
   dibujarTodo();
 }
-
+//------------------------------------[controsl de velocidad serpiente]----------------------------------//
 function cambiarVelocidad(){
   clearInterval(intervaloSerpiente);
   velocidad -= 100;
   intervaloSerpiente = setInterval(moverSerpiente, velocidad);
 }
-
+//------------------------------------[cambio de nivel]----------------------------------//
 function nivel(puntaje){
   if(puntaje== 3){
     document.getElementById("mensajeLevel").innerText = "NIVEL 2, APRENDIS";
@@ -316,5 +332,16 @@ function nivel(puntaje){
   if(puntaje== 9){
     document.getElementById("mensajeLevel").innerText = 'NIVEL 5, "NIVEL DIOS"';
   }
+}
+//------------------------------------[controsl del tiempo]----------------------------------//
+function restarTiempo(){
+    tiempo--;
+        document.getElementById("tiempoRest").innerText = tiempo;
+        if (tiempo == 0) {
+          clearInterval(intervaloSerpiente);
+         clearInterval(intervaloTiempo); 
+    }
+    gameOver();
+        
 }
 
